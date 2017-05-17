@@ -12,11 +12,11 @@ Set or Read Raspberry Pi3 GPIO pins
         Usage: sudo [./]pigpio command [state] [pins]   
                 command:
                         help    prints the help text 
-                        set     sets the value of the indicated pins to the indica$
+                        set     sets the value of the indicated pins to the indicated state
                         get     prints the state of the indicated pins           
                 state:
-                        high    logical 1 for the indicated pins, equivalent volta$
-                        low     logical 0 for the indicated pins, equivalent volta$
+                        high    logical 1 for the indicated pins, equivalent voltage 3.3[V]
+                        low     logical 0 for the indicated pins, equivalent voltage 0[V]
                 pins:
                         all     BCM pins between 0 and 27 
         Examples without snap:   
