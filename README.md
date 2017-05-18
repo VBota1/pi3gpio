@@ -2,10 +2,12 @@
 Set or Read Raspberry Pi3 GPIO pins
 
 # installation from github:
-'       first download the snap packet from the folder pigpio/snap
-        then run:
-        
-                sudo snap install --devmode pigpio_1.1_armhf.snap
+'       first download the snap:
+                manual from https://github.com/VBota1/pi3gpio/tree/master/snap
+                
+'       then run:
+ 
+                sudo snap install --devmode pi3gpio_1.8_armhf.snap
 
 # installation from ubuntu store
         sudo snap install pi3gpio --devmode --channel=candidate
