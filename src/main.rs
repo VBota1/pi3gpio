@@ -11,7 +11,7 @@ const GET_CMD_STR: &'static str = "get";
 const HIGH_PIN_STATE_STR: &'static str = "high";
 const LOW_PIN_STATE_STR: &'static str = "low";
 const ALL_PINS_STR: &'static str = "all";
-const HELP_EXAMPLE_STR: &'static str = "sudo pi3gpio help";
+const HELP_EXAMPLE_STR: &'static str = "sudo ./pi3gpio help";
 
 fn main() {
 	handle_cmd ( env::args_os() );
@@ -38,7 +38,7 @@ fn handle_cmd (mut cmd: env::ArgsOs) {
 }
 
 fn print_help_text () {
-	println! ("SYNTAX: sudo pi3gpio command [state] [pins]");
+	println! ("SYNTAX: sudo ./pi3gpio command [state] [pins]");
 	println! ("	command: ");
 	println! ("		{}	prints the help text", HELP_CMD_STR );
 	println! ("		{}	sets the value of the indicated pins to the indicated value", SET_CMD_STR );
@@ -49,13 +49,13 @@ fn print_help_text () {
 	println! ("	pins: ");
 	println! ("		{}	BCM pins between 0 and {}", ALL_PINS_STR, LAST_PIN_NUMBER );
 	println! ("Examples:");
-	println! ("	sudo pi3gpio help ");
-	println! ("	sudo pi3gpio get all");
-	println! ("	sudo pi3gpio get 4");
-	println! ("	sudo pi3gpio get 10 11");
-	println! ("	sudo pi3gpio set low all");
-	println! ("	sudo pi3gpio set high 12");
-	println! ("	sudo pi3gpio set low 2 5 7");
+	println! ("	sudo ./pi3gpio help ");
+	println! ("	sudo ./pi3gpio get all");
+	println! ("	sudo ./pi3gpio get 4");
+	println! ("	sudo ./pi3gpio get 10 11");
+	println! ("	sudo ./pi3gpio set low all");
+	println! ("	sudo ./pi3gpio set high 12");
+	println! ("	sudo ./pi3gpio set low 2 5 7");
 }
 
 trait ReadState{
