@@ -16,7 +16,7 @@ Set or Read Raspberry Pi3 GPIO pins
   Use this app to set or read Raspberry Pi3 GPIO pins from your console.
 
   Examples without snap:   
-    ```
+  ```
     sudo ./pigpio help    
     sudo ./pigpio get all     
     sudo ./pigpio get 4   
@@ -24,7 +24,7 @@ Set or Read Raspberry Pi3 GPIO pins
     sudo ./pigpio set low all   
     sudo ./pigpio set high 12
     sudo ./pigpio set low 2 5 7
-    ```
+  ```
   Examples with snap:   
   ```
     sudo pigpio help    
