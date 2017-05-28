@@ -1,8 +1,0 @@
-[package]
-name = "pi3gpio"
-version = "0.1.5"
-authors = ["VBota1"]
-
-[dependencies]
-rppal = "0.1.2"
-
