@@ -3,7 +3,7 @@ Set or Read Raspberry Pi3 GPIO pins
 
 # installation from github:
   1. first download the snap:
-    * manual from https://github.com/VBota1/pi3gpio/tree/master/snap
+    * manual from https://github.com/VBota1/pi3gpio/snap
     * or by cloning repository: ```git clone https://github.com/VBota1/pi3gpio```
   2. then navigate to the folder containing the snap
   3. then run:
