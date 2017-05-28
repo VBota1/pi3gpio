@@ -31,7 +31,14 @@ const GET_CMD_STR: &'static str = "get";
 const HIGH_PIN_STATE_STR: &'static str = "high";
 const LOW_PIN_STATE_STR: &'static str = "low";
 const ALL_PINS_STR: &'static str = "all";
-const HELP_EXAMPLE_STR: &'static str = "sudo ./pi3gpio help";
+#[cfg(ignore_PATH)]
+const APP_CALL_STR: &'static str = "./pi3gpio";
+#[cfg(not(ignore_PATH))]
+const APP_CALL_STR: &'static str = "pi3gpio";
+#[cfg(ignore_PATH)]
+const HELP_SUGGEST_STR: &'static str = "For help run \"sudo ./pi3gpio help\"";
+#[cfg(not(ignore_PATH))]
+const HELP_SUGGEST_STR: &'static str = "For help run \"sudo pi3gpio help\"";
 
 fn main() {
 	handle_cmd ( env::args_os() );
@@ -50,15 +57,15 @@ fn handle_cmd (mut cmd: env::ArgsOs) {
 				read_pins (cmd);
 			}
 			else {
-				panic! ("Unknown command {:?}! \nFor help run \"{}\"", action, HELP_EXAMPLE_STR );
+				panic! ("Unknown command {:?}! \n{}", action, HELP_SUGGEST_STR );
 			}
 		},
-		None => panic! ("No command found! \nFor help run \"{}\"", HELP_EXAMPLE_STR ),
+		None => panic! ("No command found! \n{}", HELP_SUGGEST_STR ),
 	}
 }
 
 fn print_help_text () {
-	println! ("SYNTAX: sudo ./pi3gpio command [state] [pins]");
+	println! ("SYNTAX: sudo {} command [state] [pins]", APP_CALL_STR );
 	println! ("	command: ");
 	println! ("		{}	prints the help text", HELP_CMD_STR );
 	println! ("		{}	sets the value of the indicated pins to the indicated value", SET_CMD_STR );
@@ -69,13 +76,21 @@ fn print_help_text () {
 	println! ("	pins: ");
 	println! ("		{}	BCM pins between 0 and {}", ALL_PINS_STR, LAST_PIN_NUMBER );
 	println! ("Examples:");
-	println! ("	sudo ./pi3gpio help ");
-	println! ("	sudo ./pi3gpio get all");
-	println! ("	sudo ./pi3gpio get 4");
-	println! ("	sudo ./pi3gpio get 10 11");
-	println! ("	sudo ./pi3gpio set low all");
-	println! ("	sudo ./pi3gpio set high 12");
-	println! ("	sudo ./pi3gpio set low 2 5 7");
+	println! ("	sudo {} help ", APP_CALL_STR );
+	println! ("	sudo {} get all", APP_CALL_STR );
+	println! ("	sudo {} get 4", APP_CALL_STR );
+	println! ("	sudo {} get 10 11", APP_CALL_STR );
+	println! ("	sudo {} set low all", APP_CALL_STR );
+	println! ("	sudo {} set high 12", APP_CALL_STR );
+	println! ("	sudo {} set low 2 5 7", APP_CALL_STR );
+	#[cfg(not(ignore_PATH))]
+	{
+		println! ("Access:");
+		println! ("	The application needs access to /dev/mem or /dev/gpiomem to control GPIO pins. This is why sudo is required.");
+		println! ("	In order to gain access to /dev/mem you need run, only once after installantion, the following commands:");
+		println! ("		sudo snap connect pi3gpio:physical-memory-control core:physical-memory-control");
+		println! ("		sudo snap connect pi3gpio:physical-memory-observe core:physical-memory-observe");
+	}
 }
 
 trait ReadState{
@@ -87,7 +102,7 @@ impl ReadState for OsString {
 		match self.to_u8() {
 			Ok (pin) => read_pin ( gpio, pin ),
 			Err (e) => {
-				panic! ("{} \nFor help run \"{}\"", e,  HELP_EXAMPLE_STR );		
+				panic! ("{} \n{}", e,  HELP_SUGGEST_STR );		
 			},
 		}		
 	}
@@ -120,7 +135,7 @@ fn read_pins (mut cmd: env::ArgsOs) {
 				pin_as_os_string.read_state ( &mut gpio );
 			}
 		}
-		None => panic! ("Pin not found! \nFor help run \"{}\"",  HELP_EXAMPLE_STR ),		
+		None => panic! ("Pin not found! \n{}",  HELP_SUGGEST_STR ),		
 	}
 
 	for argument in cmd {
@@ -163,10 +178,10 @@ fn get_pin_state ( argument: Option<OsString>  ) -> Level {
 				pin_state = Level::High;
 			}
 			else if state != OsString::from(LOW_PIN_STATE_STR) {
-				panic! ("State {:?} is invalid! \nFor help run \"{}\"", state, HELP_EXAMPLE_STR );
+				panic! ("State {:?} is invalid! \n{}", state, HELP_SUGGEST_STR );
 			}
 		},
-		None => panic! ("State not found! \nFor help run \"{}\"",  HELP_EXAMPLE_STR ),
+		None => panic! ("State not found! \n{}",  HELP_SUGGEST_STR ),
 	}
 
     pin_state
@@ -181,7 +196,7 @@ impl SetState for OsString {
 		match self.to_u8() {
 			Ok (pin) => set_pin ( gpio, pin, pin_state ),
 			Err (e) => {
-				panic! ("{} \nFor help run \"{}\"", e,  HELP_EXAMPLE_STR );		
+				panic! ("{} \n{}", e,  HELP_SUGGEST_STR );		
 			},
 		}		
 	}
@@ -216,7 +231,7 @@ fn set_pins (mut cmd: env::ArgsOs) {
 			}
 			
 		}
-		None => panic! ("Pin not found! \nFor help run \"{}\"",  HELP_EXAMPLE_STR ),		
+		None => panic! ("Pin not found! \n{}",  HELP_SUGGEST_STR ),		
 	}
 
 	for argument in cmd {
