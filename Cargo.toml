@@ -1,8 +1,10 @@
 [package]
 name = "pi3gpio"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["VBota1"]
 
 [dependencies]
-rppal = "0.1.2"
+rppal = "0.1.3"
 
+[features]
+ignore_PATH = []
